@@ -54,17 +54,30 @@
         </div>
     </div>
     <div class="row marketing">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <h2 style="text-align: center" id="btcPerMIOTA">?</h2>
             <h4 style="text-align: center">BTC/MIOTA</h4>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <h2 style="text-align: center" id="ethPerMIOTA">?</h2>
             <h4 style="text-align: center">ETH/MIOTA</h4>
         </div>
+        <div class="col-md-4">
+            <h2 style="text-align: center" id="ethPerBTC">?</h2>
+            <h4 style="text-align: center">ETH/BTC</h4>
+        </div>
     </div>
 
+    <!--TODO: Refactor to use templating instead of hard coding all these rows-->
     <div class="row marketing">
+        <div class="col-sm">
+            <div class="well">
+
+            <h1 style="text-align: center">
+                Buy Strategies
+            </h1>
+            </div>
+        </div>
         <div class="col-sm">
             <div class="panel panel-default" id="usdToMIOTAPanel" style="text-align: center">
                 <div class="panel-heading">
@@ -96,7 +109,84 @@
             </div>
         </div>
 
-        <div class="col-sm">
+
+        <!--TODO: Refactor to use templating instead of hard coding all these rows-->
+        <div class="row marketing">
+            <div class="col-sm">
+                <div class="well">
+                <h1 style="text-align: center">
+                    Hysteresis Strategies
+                </h1>
+                    <h3 style="text-align: center">Takes advantage of inefficiencies in the market to make more than what you started with. </h3>
+                    <h3 style="text-align: center"><span style="font-weight: bold">Warning: </span>you will be charged with <a href="http://www.investopedia.com/articles/active-trading/042414/what-makertaker-fees-mean-you.asp">Taker Fees</a> if you buy/sell at market prices. Bitfinex's taker fee at the time of writing is 0.2%; maker fee ~0.1% or better</h3>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="panel panel-default" id="miotaToUSDToBTCToMIOTAPanel" style="text-align: center">
+                    <div class="panel-heading">
+                        <h2>1 MIOTA ⇨ USD ⇨ BTC ⇨ MIOTA</h2>
+                    </div>
+                    <div class="panel-body">
+                        <h1><span id="miotaToUSDToBTCToMIOTA"></span> MIOTA<br /><span id="miotaToUSDToBTCToMIOTAPercent"></span></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="panel panel-default" id="miotaToUSDToETHToMIOTAPanel" style="text-align: center">
+                    <div class="panel-heading">
+                        <h2>1 MIOTA ⇨ USD ⇨ ETH ⇨ MIOTA</h2>
+                    </div>
+                    <div class="panel-body" style="text-align: center">
+                        <h1><span id="miotaToUSDToETHToMIOTA"></span> MIOTA<br /><span id="miotaToUSDToETHToMIOTAPercent"></span></h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm">
+                <div class="panel panel-default" id="miotaToBTCToUSDToMIOTAPanel" style="text-align: center">
+                    <div class="panel-heading">
+                        <h2>1 MIOTA ⇨ BTC ⇨ USD ⇨ MIOTA</h2>
+                    </div>
+                    <div class="panel-body">
+                        <h1><span id="miotaToBTCToUSDToMIOTA"></span> MIOTA<br /><span id="miotaToBTCToUSDToMIOTAPercent"></span></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="panel panel-default" id="miotaToETHToUSDToMIOTAPanel" style="text-align: center">
+                    <div class="panel-heading">
+                        <h2>1 MIOTA ⇨ ETH ⇨ USD ⇨ MIOTA</h2>
+                    </div>
+                    <div class="panel-body" style="text-align: center">
+                        <h1><span id="miotaToETHToUSDToMIOTA"></span> MIOTA<br /><span id="miotaToETHToUSDToMIOTAPercent"></span></h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm">
+                <div class="panel panel-default" id="miotaToBTCToETHToMIOTAPanel" style="text-align: center">
+                    <div class="panel-heading">
+                        <h2>1 MIOTA ⇨ BTC ⇨ ETH ⇨ MIOTA</h2>
+                    </div>
+                    <div class="panel-body">
+                        <h1><span id="miotaToBTCToETHToMIOTA"></span> MIOTA<br /><span id="miotaToBTCToETHToMIOTAPercent"></span></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="panel panel-default" id="miotaToETHToBTCToMIOTAPanel" style="text-align: center">
+                    <div class="panel-heading">
+                        <h2>1 MIOTA ⇨ ETH ⇨ BTC ⇨ MIOTA</h2>
+                    </div>
+                    <div class="panel-body" style="text-align: center">
+                        <h1><span id="miotaToETHToBTCToMIOTA"></span> MIOTA<br /><span id="miotaToETHToBTCToMIOTAPercent"></span></h1>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-sm">
             <h4>Prices fetched from <a href="https://www.cryptocompare.com/">https://www.cryptocompare.com/</a></h4>
         </div>
     </div>

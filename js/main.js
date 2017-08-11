@@ -7,6 +7,7 @@ var btcPerMIOTA = null
 var ethPerMIOTA = null
 var usdPerBTC = null
 var usdPerETH = null
+var ethPerBTC = null
 
 function priceChangedHandler(target, property, value, receiver) {
     target[property] = value
@@ -17,16 +18,26 @@ function priceChangedHandler(target, property, value, receiver) {
 const startingUSD = 1000
 
 function updateTable() {
+    updateCurrencyConversions()
+    updateBuyStrategies()
+    updateHysteresesStrategies()
+}
+
+function updateCurrencyConversions() {
     $("#usdPerMIOTA").text(usdPerMIOTA)
     $("#usdPerBTC").text(usdPerBTC)
     $("#usdPerETH").text(usdPerETH)
     $("#btcPerMIOTA").text(btcPerMIOTA)
     $("#ethPerMIOTA").text(ethPerMIOTA)
+    $("#ethPerBTC").text(ethPerBTC)
+}
 
+function updateBuyStrategies() {
     let usdToMIOTA = startingUSD / usdPerMIOTA
     let usdToBTCToMIOTA = startingUSD / usdPerBTC / btcPerMIOTA
     let usdToETHToMIOTA = startingUSD / usdPerETH / ethPerMIOTA
 
+    // TODO: Refactor to use templating
     let currencies = [
         {
             panelElement: $("#usdToMIOTAPanel"),
@@ -57,6 +68,71 @@ function updateTable() {
     })
 }
 
+const startingMIOTA = 1
+
+function updateHysteresesStrategies() {
+    const miotaToUSDToBTCToMIOTA = startingMIOTA * usdPerMIOTA / usdPerBTC / btcPerMIOTA
+    const miotaToUSDToETHToMIOTA = startingMIOTA * usdPerMIOTA / usdPerETH / ethPerMIOTA
+    const miotaToBTCToUSDToMIOTA = startingMIOTA * btcPerMIOTA * usdPerBTC / usdPerMIOTA
+    const miotaToETHToUSDToMIOTA = startingMIOTA * ethPerMIOTA * usdPerETH / usdPerMIOTA
+    const miotaToBTCToETHToMIOTA = startingMIOTA * btcPerMIOTA * ethPerBTC / ethPerMIOTA
+    const miotaToETHToBTCToMIOTA = startingMIOTA * ethPerMIOTA / ethPerBTC / btcPerMIOTA
+
+    // TODO: Refactor to use templating
+    const hystereses = [
+        {
+            panelElement: $("#miotaToUSDToBTCToMIOTAPanel"),
+            priceElement: $("#miotaToUSDToBTCToMIOTA")[0],
+            price: miotaToUSDToBTCToMIOTA,
+            pricePercentageElement: $("#miotaToUSDToBTCToMIOTAPercent")[0],
+        },
+        {
+            panelElement: $("#miotaToUSDToETHToMIOTAPanel"),
+            priceElement: $("#miotaToUSDToETHToMIOTA")[0],
+            price: miotaToUSDToETHToMIOTA,
+            pricePercentageElement: $("#miotaToUSDToETHToMIOTAPercent")[0],
+        },
+        {
+            panelElement: $("#miotaToBTCToUSDToMIOTAPanel"),
+            priceElement: $("#miotaToBTCToUSDToMIOTA")[0],
+            price: miotaToBTCToUSDToMIOTA,
+            pricePercentageElement: $("#miotaToBTCToUSDToMIOTAPercent")[0],
+        },
+        {
+            panelElement: $("#miotaToETHToUSDToMIOTAPanel"),
+            priceElement: $("#miotaToETHToUSDToMIOTA")[0],
+            price: miotaToETHToUSDToMIOTA,
+            pricePercentageElement: $("#miotaToETHToUSDToMIOTAPercent")[0],
+        },
+        {
+            panelElement: $("#miotaToBTCToETHToMIOTAPanel"),
+            priceElement: $("#miotaToBTCToETHToMIOTA")[0],
+            price: miotaToBTCToETHToMIOTA,
+            pricePercentageElement: $("#miotaToBTCToETHToMIOTAPercent")[0],
+        },
+        {
+            panelElement: $("#miotaToETHToBTCToMIOTAPanel"),
+            priceElement: $("#miotaToETHToBTCToMIOTA")[0],
+            price: miotaToETHToBTCToMIOTA,
+            pricePercentageElement: $("#miotaToETHToBTCToMIOTAPercent")[0],
+        }
+    ]
+
+    hystereses.forEach(function(hysteresis, index){
+        hysteresis.priceElement.innerText = hysteresis.price
+        const percentageChange = (hysteresis.price - 1) * 100
+        var percentageChangeString
+        if (percentageChange > 0) {
+            percentageChangeString = `(+${percentageChange}%)`
+            hysteresis.panelElement.attr("class", "panel panel-success")
+        } else {
+            percentageChangeString = `(${percentageChange}%)`
+            hysteresis.panelElement.attr("class", "panel panel-danger")
+        }
+        hysteresis.pricePercentageElement.innerText = percentageChangeString
+    })
+}
+
 $(function(){
     $.getJSON(`https://min-api.cryptocompare.com/data/price?fsym=IOT&tsyms=BTC,USD,ETH&tryConversion=false`, function(data) {
         usdPerMIOTA = data.USD
@@ -68,8 +144,9 @@ $(function(){
             failure()
         });
 
-    $.getJSON(`https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD&tryConversion=false`, function(data) {
+    $.getJSON(`https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,ETH&tryConversion=false`, function(data) {
         usdPerBTC = data.USD
+        ethPerBTC = data.ETH
         updateTable()
     })
         .fail(function(data) {
