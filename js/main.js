@@ -83,4 +83,34 @@ $(function(){
         .fail(function(data) {
             failure()
         });
+
+    let donateButton = $("#donateButton")
+    donateButton.tooltip({
+        trigger: "click",
+        placement: "top"
+    })
+
+    function setTooltip(message) {
+        donateButton.tooltip('hide')
+            .attr('data-original-title', message)
+            .tooltip('show')
+    }
+
+    function hideTooltip() {
+        setTimeout(function() {
+            donateButton.tooltip('hide')
+        }, 1000)
+    }
+
+    var clipboard = new Clipboard('#donateButton');
+
+    clipboard.on('success', function(e) {
+        setTooltip('IOTA Address Copied!')
+        hideTooltip()
+    });
+
+    clipboard.on('error', function(e) {
+        setTooltip('Failed!')
+        hideTooltip()
+    })
 });
