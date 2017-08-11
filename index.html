@@ -1,10 +1,109 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Test</title>
-</head>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico">
+
+    <title>IOTA Buy Strategy</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom styles for this template -->
+    <link href="./css/jumbotron-narrow.css" rel="stylesheet">
+
+    </head>
+
 <body>
-Test
-</body>
-</html>
+
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li class="nav-item">
+                    <a class="nav-link active" href="" onclick="window.location.reload(true)">Refresh</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/pRizz/iota-buy-strategy">Source</a>
+                </li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">IOTA Buy Strategy</h3>
+    </div>
+    <div class="row marketing">
+        <div class="col-md-4">
+            <h2 style="text-align: center" id="usdPerMIOTA">?</h2>
+            <h4 style="text-align: center">USD/MIOTA</h4>
+        </div>
+        <div class="col-md-4">
+            <h2 style="text-align: center" id="usdPerBTC">?</h2>
+            <h4 style="text-align: center">USD/BTC</h4>
+        </div>
+        <div class="col-md-4">
+            <h2 style="text-align: center" id="usdPerETH">?</h2>
+            <h4 style="text-align: center">USD/ETH</h4>
+        </div>
+    </div>
+    <div class="row marketing">
+        <div class="col-md-6">
+            <h2 style="text-align: center" id="btcPerMIOTA">?</h2>
+            <h4 style="text-align: center">BTC/MIOTA</h4>
+        </div>
+        <div class="col-md-6">
+            <h2 style="text-align: center" id="ethPerMIOTA">?</h2>
+            <h4 style="text-align: center">ETH/MIOTA</h4>
+        </div>
+    </div>
+
+    <div class="row marketing">
+        <div class="col-sm">
+            <div class="panel panel-default" id="usdToMIOTAPanel" style="text-align: center">
+                <div class="panel-heading">
+                    <h2>$1,000 ⇨ MIOTA</h2>
+                </div>
+                <div class="panel-body">
+                    <h1><span id="usdToMIOTA"></span> MIOTA</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="panel panel-default" id="usdToBTCToMIOTAPanel" style="text-align: center">
+                <div class="panel-heading">
+                    <h2>$1,000 ⇨ BTC ⇨ MIOTA</h2>
+                </div>
+                <div class="panel-body" style="text-align: center">
+                    <h1><span id="usdToBTCToMIOTA"></span> MIOTA</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="panel panel-default" id="usdToETHToMIOTAPanel" style="text-align: center">
+                <div class="panel-heading">
+                    <h2>$1,000 ⇨ ETH ⇨ MIOTA</h2>
+                </div>
+                <div class="panel-body" style="text-align: center">
+                    <h1><span id="usdToETHToMIOTA"></span> MIOTA</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <h4>Prices fetched from <a href="https://www.cryptocompare.com/">https://www.cryptocompare.com/</a></h4>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <p><a href="https://github.com/pRizz/iota-buy-strategy">Fork this on GitHub!</a></p>
+        <p>© Peter Ryszkiewicz 2017</p>
+    </footer>
+
+</div> <!-- /container -->
+
+</body><div></div></html>
