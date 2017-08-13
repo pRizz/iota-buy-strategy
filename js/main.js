@@ -7,7 +7,7 @@ var btcPerMIOTA = null
 var ethPerMIOTA = null
 var usdPerBTC = null
 var usdPerETH = null
-var ethPerBTC = null
+var btcPerETH = null
 
 function priceChangedHandler(target, property, value, receiver) {
     target[property] = value
@@ -28,8 +28,8 @@ function updateCurrencyConversions() {
     $("#usdPerBTC").text(usdPerBTC)
     $("#usdPerETH").text(usdPerETH)
     $("#btcPerMIOTA").text(btcPerMIOTA)
+    $("#btcPerETH").text(btcPerETH)
     $("#ethPerMIOTA").text(ethPerMIOTA)
-    $("#ethPerBTC").text(ethPerBTC)
 }
 
 function updateBuyStrategies() {
@@ -75,8 +75,8 @@ function updateHysteresesStrategies() {
     const miotaToUSDToETHToMIOTA = startingMIOTA * usdPerMIOTA / usdPerETH / ethPerMIOTA
     const miotaToBTCToUSDToMIOTA = startingMIOTA * btcPerMIOTA * usdPerBTC / usdPerMIOTA
     const miotaToETHToUSDToMIOTA = startingMIOTA * ethPerMIOTA * usdPerETH / usdPerMIOTA
-    const miotaToBTCToETHToMIOTA = startingMIOTA * btcPerMIOTA * ethPerBTC / ethPerMIOTA
-    const miotaToETHToBTCToMIOTA = startingMIOTA * ethPerMIOTA / ethPerBTC / btcPerMIOTA
+    const miotaToBTCToETHToMIOTA = startingMIOTA * btcPerMIOTA / btcPerETH / ethPerMIOTA
+    const miotaToETHToBTCToMIOTA = startingMIOTA * ethPerMIOTA * btcPerETH / btcPerMIOTA
 
     // TODO: Refactor to use templating
     const hystereses = [
@@ -133,33 +133,35 @@ function updateHysteresesStrategies() {
     })
 }
 
+const currencyExchange = "Bitfinex"
+
 $(function(){
-    $.getJSON(`https://min-api.cryptocompare.com/data/price?fsym=IOT&tsyms=BTC,USD,ETH&tryConversion=false`, function(data) {
+    $.getJSON(`https://min-api.cryptocompare.com/data/price?fsym=IOT&tsyms=BTC,USD,ETH&tryConversion=false&e=${currencyExchange}`, function(data) {
         usdPerMIOTA = data.USD
         btcPerMIOTA = data.BTC
         ethPerMIOTA = data.ETH
         updateTable()
     })
-        .fail(function(data) {
-            failure()
-        });
+    .fail(function(data) {
+        failure()
+    });
 
-    $.getJSON(`https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,ETH&tryConversion=false`, function(data) {
+    $.getJSON(`https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD&tryConversion=false&e=${currencyExchange}`, function(data) {
         usdPerBTC = data.USD
-        ethPerBTC = data.ETH
         updateTable()
     })
-        .fail(function(data) {
-            failure()
-        });
+    .fail(function(data) {
+        failure()
+    });
 
-    $.getJSON(`https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD&tryConversion=false`, function(data) {
+    $.getJSON(`https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,BTC&tryConversion=false&e=${currencyExchange}`, function(data) {
         usdPerETH = data.USD
+        btcPerETH = data.BTC
         updateTable()
     })
-        .fail(function(data) {
-            failure()
-        });
+    .fail(function(data) {
+        failure()
+    });
 
     let donateButton = $("#donateButton")
     donateButton.tooltip({
