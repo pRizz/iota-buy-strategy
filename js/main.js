@@ -8,6 +8,7 @@ var ethPerMIOTA = null
 var usdPerBTC = null
 var usdPerETH = null
 var btcPerETH = null
+var roundedN = 0 //Initialize the rounded number variable
 
 function priceChangedHandler(target, property, value, receiver) {
     target[property] = value
@@ -16,6 +17,12 @@ function priceChangedHandler(target, property, value, receiver) {
 }
 
 const startingUSD = 1000
+
+// Rounds values to 4 decimal places so that they look a bit cleaner
+function roundTo4Decimals(value){
+    roundedN = Math.round(value * 10000)/10000
+    return roundedN
+}
 
 function updateTable() {
     updateCurrencyConversions()
@@ -42,17 +49,17 @@ function updateBuyStrategies() {
         {
             panelElement: $("#usdToMIOTAPanel"),
             priceElement: $("#usdToMIOTA")[0],
-            price: usdToMIOTA
+            price: roundTo4Decimals(usdToMIOTA),
         },
         {
             panelElement: $("#usdToBTCToMIOTAPanel"),
             priceElement: $("#usdToBTCToMIOTA")[0],
-            price: usdToBTCToMIOTA
+            price: roundTo4Decimals(usdToBTCToMIOTA),
         },
         {
             panelElement: $("#usdToETHToMIOTAPanel"),
             priceElement: $("#usdToETHToMIOTA")[0],
-            price: usdToETHToMIOTA
+            price: roundTo4Decimals(usdToETHToMIOTA),
         }
     ]
 
@@ -83,44 +90,44 @@ function updateHysteresesStrategies() {
         {
             panelElement: $("#miotaToUSDToBTCToMIOTAPanel"),
             priceElement: $("#miotaToUSDToBTCToMIOTA")[0],
-            price: miotaToUSDToBTCToMIOTA,
+            price: roundTo4Decimals(miotaToUSDToBTCToMIOTA),
             pricePercentageElement: $("#miotaToUSDToBTCToMIOTAPercent")[0],
         },
         {
             panelElement: $("#miotaToUSDToETHToMIOTAPanel"),
             priceElement: $("#miotaToUSDToETHToMIOTA")[0],
-            price: miotaToUSDToETHToMIOTA,
+            price: roundTo4Decimals(miotaToUSDToETHToMIOTA),
             pricePercentageElement: $("#miotaToUSDToETHToMIOTAPercent")[0],
         },
         {
             panelElement: $("#miotaToBTCToUSDToMIOTAPanel"),
             priceElement: $("#miotaToBTCToUSDToMIOTA")[0],
-            price: miotaToBTCToUSDToMIOTA,
+            price: roundTo4Decimals(miotaToBTCToUSDToMIOTA),
             pricePercentageElement: $("#miotaToBTCToUSDToMIOTAPercent")[0],
         },
         {
             panelElement: $("#miotaToETHToUSDToMIOTAPanel"),
             priceElement: $("#miotaToETHToUSDToMIOTA")[0],
-            price: miotaToETHToUSDToMIOTA,
+            price: roundTo4Decimals(miotaToETHToUSDToMIOTA),
             pricePercentageElement: $("#miotaToETHToUSDToMIOTAPercent")[0],
         },
         {
             panelElement: $("#miotaToBTCToETHToMIOTAPanel"),
             priceElement: $("#miotaToBTCToETHToMIOTA")[0],
-            price: miotaToBTCToETHToMIOTA,
+            price: roundTo4Decimals(miotaToBTCToETHToMIOTA),
             pricePercentageElement: $("#miotaToBTCToETHToMIOTAPercent")[0],
         },
         {
             panelElement: $("#miotaToETHToBTCToMIOTAPanel"),
             priceElement: $("#miotaToETHToBTCToMIOTA")[0],
-            price: miotaToETHToBTCToMIOTA,
+            price: roundTo4Decimals(miotaToETHToBTCToMIOTA),
             pricePercentageElement: $("#miotaToETHToBTCToMIOTAPercent")[0],
         }
     ]
 
     hystereses.forEach(function(hysteresis, index){
         hysteresis.priceElement.innerText = hysteresis.price
-        const percentageChange = (hysteresis.price - 1) * 100
+        const percentageChange = roundTo4Decimals(((hysteresis.price - 1) * 100))
         var percentageChangeString
         if (percentageChange > 0) {
             percentageChangeString = `(+${percentageChange}%)`
