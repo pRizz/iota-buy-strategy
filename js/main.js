@@ -73,12 +73,15 @@ function updateBuyStrategies() {
 const startingMIOTA = 1
 
 function updateHysteresesStrategies() {
-    const miotaToUSDToBTCToMIOTA = startingMIOTA * usdPerMIOTA / usdPerBTC / btcPerMIOTA
-    const miotaToUSDToETHToMIOTA = startingMIOTA * usdPerMIOTA / usdPerETH / ethPerMIOTA
-    const miotaToBTCToUSDToMIOTA = startingMIOTA * btcPerMIOTA * usdPerBTC / usdPerMIOTA
-    const miotaToETHToUSDToMIOTA = startingMIOTA * ethPerMIOTA * usdPerETH / usdPerMIOTA
-    const miotaToBTCToETHToMIOTA = startingMIOTA * btcPerMIOTA / btcPerETH / ethPerMIOTA
-    const miotaToETHToBTCToMIOTA = startingMIOTA * ethPerMIOTA * btcPerETH / btcPerMIOTA
+    const takerFee = 0.002 // 0.2%
+    const takerFeeMultiplier = 1 - takerFee
+    const takerFeeMultiplierCubed = Math.pow(takerFeeMultiplier, 3)
+    const miotaToUSDToBTCToMIOTA = startingMIOTA * usdPerMIOTA / usdPerBTC / btcPerMIOTA * takerFeeMultiplierCubed
+    const miotaToUSDToETHToMIOTA = startingMIOTA * usdPerMIOTA / usdPerETH / ethPerMIOTA * takerFeeMultiplierCubed
+    const miotaToBTCToUSDToMIOTA = startingMIOTA * btcPerMIOTA * usdPerBTC / usdPerMIOTA * takerFeeMultiplierCubed
+    const miotaToETHToUSDToMIOTA = startingMIOTA * ethPerMIOTA * usdPerETH / usdPerMIOTA * takerFeeMultiplierCubed
+    const miotaToBTCToETHToMIOTA = startingMIOTA * btcPerMIOTA / btcPerETH / ethPerMIOTA * takerFeeMultiplierCubed
+    const miotaToETHToBTCToMIOTA = startingMIOTA * ethPerMIOTA * btcPerETH / btcPerMIOTA * takerFeeMultiplierCubed
 
     // TODO: Refactor to use templating
     const hystereses = [
