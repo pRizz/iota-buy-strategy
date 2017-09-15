@@ -59,7 +59,9 @@ function updateBuyStrategies() {
     let bestValue = currencies.map(currency => currency.price).reduce((a, b) => Math.max(a, b))
     let indexOfBestValue = currencies.map(currency => currency.price).indexOf(bestValue)
     currencies.forEach(function(currency, index){
-        currency.priceElement.innerText = currency.price
+        currency.priceElement.innerText = currency.price.toLocaleString(undefined, {
+            maximumFractionDigits: 3
+        })
         if(index == indexOfBestValue) {
             currency.panelElement.attr("class", "panel panel-success")
         } else {
@@ -119,14 +121,20 @@ function updateHysteresesStrategies() {
     ]
 
     hystereses.forEach(function(hysteresis, index){
-        hysteresis.priceElement.innerText = hysteresis.price
+        hysteresis.priceElement.innerText = hysteresis.price.toLocaleString(undefined, {
+            maximumFractionDigits: 6
+        })
         const percentageChange = (hysteresis.price - 1) * 100
         var percentageChangeString
         if (percentageChange > 0) {
-            percentageChangeString = `(+${percentageChange}%)`
+            percentageChangeString = `(+${percentageChange.toLocaleString(undefined, {
+                maximumFractionDigits: 6
+            })}%)`
             hysteresis.panelElement.attr("class", "panel panel-success")
         } else {
-            percentageChangeString = `(${percentageChange}%)`
+            percentageChangeString = `(${percentageChange.toLocaleString(undefined, {
+                maximumFractionDigits: 6
+            })}%)`
             hysteresis.panelElement.attr("class", "panel panel-danger")
         }
         hysteresis.pricePercentageElement.innerText = percentageChangeString
